@@ -1,0 +1,22 @@
+{
+  "name": "deployer",
+  "version": "1.0.0",
+  "description": "Deploy to fission",
+  "main": "deployer",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ServerlessByExample/deployer.git"
+  },
+  "keywords": [
+    "deployer"
+  ],
+  "author": "Krishnaswamy Subramanian",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ServerlessByExample/deployer/issues"
+  },
+  "homepage": "https://github.com/ServerlessByExample/deployer#readme"
+}
