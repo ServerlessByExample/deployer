@@ -10,6 +10,9 @@
     "type": "git",
     "url": "git+https://github.com/ServerlessByExample/deployer.git"
   },
+  "bin": {
+    "deployer": "./deployer"
+  },
   "keywords": [
     "deployer"
   ],
@@ -18,5 +21,10 @@
   "bugs": {
     "url": "https://github.com/ServerlessByExample/deployer/issues"
   },
-  "homepage": "https://github.com/ServerlessByExample/deployer#readme"
+  "homepage": "https://github.com/ServerlessByExample/deployer#readme",
+  "dependencies": {
+    "js-yaml": "^3.10.0",
+    "lodash": "^4.17.4",
+    "shelljs": "^0.7.8"
+  }
 }

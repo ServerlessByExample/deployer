@@ -1,0 +1,53 @@
+#! /usr/bin/env node
+
+const shell = require('shelljs');
+const yaml = require('js-yaml');
+const fs = require('fs');
+const _ = require('lodash');
+
+const availableFunctions = () =>
+  new Promise((resolve, reject) => {
+    fs.readFile('./Functions.yaml', 'utf8', (err, content) => {
+      if (err) reject(err);
+      else resolve(yaml.safeLoad(content));
+    });
+  });
+
+const exec = cmd =>
+  new Promise((resolve, reject) => {
+    shell.exec(cmd, { silent: true }, (code, stdout, stderr) => {
+      if (code) reject(stderr);
+      else resolve(stdout);
+    });
+  });
+
+const remove = resource => {
+  const cmd = `fission ${resource} list | tail -n +2  | awk '{print "fission ${resource} delete --name " $1}' | sh -`;
+  return exec(cmd);
+};
+const removeFunctions = () => remove('function');
+const removeRoutes = () => remove('route');
+
+const createFunction = ({ name, env, path }) => {
+  const cmd = `fission function create --name ${name} --env ${env} --code ${path}`;
+  return exec(cmd);
+};
+
+const createRoute = ({ url, name, method }) => {
+  const cmd = `fission route create --method ${method} --url ${url} --function ${name}`;
+  return exec(cmd);
+};
+
+const deploy = async () => {
+  await removeFunctions();
+  await removeRoutes();
+  const result = await availableFunctions();
+  return await Promise.all(
+    _.map(result, async item => {
+      await createFunction(item);
+      await createRoute(item);
+    })
+  );
+};
+
+(async () => await deploy())();
