@@ -30,8 +30,8 @@ const remove = resource => {
 const removeFunctions = () => remove('function');
 const removeRoutes = () => remove('route');
 
-const createFunction = ({ name, env, path }) => {
-  const cmd = `fission function create --name ${name} --env ${env} --code ${path}`;
+const createFunction = ({ type, name, env, path }) => {
+  const cmd = `fission function create --name ${name} --env ${env} --${type} ${path}`;
   return exec(cmd);
 };
 
